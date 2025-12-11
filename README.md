@@ -4,7 +4,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## File Tree: gestion-productos
 
-**Generated:** 12/11/2025, 12:19:48 PM
+**Generated:** 12/11/2025, 2:32:10 PM
 
 ```
 ├── 📁 .angular
