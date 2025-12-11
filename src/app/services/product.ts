@@ -61,12 +61,17 @@ export class ProductService {
     this.productosSubject.next(this.productosOriginales)
   }
 
+  // Este es el método para realizar la aplicación de los filtros a los productos.
   filtrarProdcutos(filtros: any){
 
-    console.log('Filtros aplicados: ', filtros)
-
+    // Creamos la variable para que pueda ser cambiado (let en vez de const)
     let productosFiltrados = this.productosOriginales
 
+    //Aquí ya implementamos los filtros que aparecerán en la página, 
+    // los cuales usaremos para realizar el filtro de los productos
+    // Emepezamos con el filtro para el nombre
+    //Pedimos dentro del if que busque y comprueba que el producto que intentamos filtar tenga nombre, categoria, etc
+    //si lo tiene entonces lo convierte a minusculas y lo busca, si no lo tiene se descarta y pasa al siguente sin intentar convertirlo (en el caso de un string).
     if (filtros.name){
       productosFiltrados = productosFiltrados.filter(p =>
         p.name && p.name.toLowerCase().includes(filtros.name.toLowerCase())
@@ -75,7 +80,7 @@ export class ProductService {
 
     if (filtros.category){
       productosFiltrados = productosFiltrados.filter(p =>
-        p.category &&p.category.toLowerCase().includes(filtros.category.toLowerCase())
+        p.category && p.category.toLowerCase().includes(filtros.category.toLowerCase())
       );
     }
 
@@ -85,10 +90,16 @@ export class ProductService {
       );
     }
 
+    //Aquí con el filtro del Estado le pedimos en el if que comprube cual de los estados viene,
+    //si es vacio "" entonces no filtra nada ya que no devuleve true o false. En el caso de isActiveFilter, va a comprobar lo que le llega
+    //desde el HTML, si es un true lo convierte en String (por si acaso) y devuelve true, mostrando los Activos.
+    //En el caso de los Inactivos, hace lo mismo pero con false, comprueba, devuelve false en String y muestra los Inactivos.
+
+    // Con el productosFiltrados conseguimos que protegernos de datos "sucios" del JSON que llamamos a través del API
+    // con la variable productActiveStatus preguntamos que si es true o false en el atributo active, y lo comparamos con isActiveFilter para mostrar
+    // ACtivo o Inactivo. Si no tiene campo o es no definido automáticamente devuelve false.
     if ( filtros.active !== '' && filtros.active !== null && filtros.active !== undefined){
       const isActiveFilter = String(filtros.active) === 'true'
-
-      console.log('Filtrando por estado activo:', isActiveFilter);
 
       productosFiltrados = productosFiltrados.filter(p => {
         const productActiveStatus = p.active === true
@@ -96,11 +107,11 @@ export class ProductService {
       });
     }
 
-    console.log('Resultados encontrados:', productosFiltrados.length);
-
     this.productosSubject.next(productosFiltrados)
   }
 
+  // Metodo para limpar los filtros aplicados, recuperando la lista de productos originales
+  // Cada nuevo producto creado se borrarán. 
   limpiarFiltros(){
     this.productosSubject.next(this.productosOriginales)
   }
