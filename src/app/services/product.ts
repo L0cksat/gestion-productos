@@ -60,5 +60,49 @@ export class ProductService {
     this.productosOriginales = this.productosOriginales.filter(p => p._id !== id)
     this.productosSubject.next(this.productosOriginales)
   }
+
+  filtrarProdcutos(filtros: any){
+
+    console.log('Filtros aplicados: ', filtros)
+
+    let productosFiltrados = this.productosOriginales
+
+    if (filtros.name){
+      productosFiltrados = productosFiltrados.filter(p =>
+        p.name && p.name.toLowerCase().includes(filtros.name.toLowerCase())
+      );
+    }
+
+    if (filtros.category){
+      productosFiltrados = productosFiltrados.filter(p =>
+        p.category &&p.category.toLowerCase().includes(filtros.category.toLowerCase())
+      );
+    }
+
+    if (filtros.price){
+      productosFiltrados = productosFiltrados.filter(p =>
+        p.price <= filtros.price
+      );
+    }
+
+    if ( filtros.active !== '' && filtros.active !== null && filtros.active !== undefined){
+      const isActiveFilter = String(filtros.active) === 'true'
+
+      console.log('Filtrando por estado activo:', isActiveFilter);
+
+      productosFiltrados = productosFiltrados.filter(p => {
+        const productActiveStatus = p.active === true
+        return productActiveStatus === isActiveFilter
+      });
+    }
+
+    console.log('Resultados encontrados:', productosFiltrados.length);
+
+    this.productosSubject.next(productosFiltrados)
+  }
+
+  limpiarFiltros(){
+    this.productosSubject.next(this.productosOriginales)
+  }
   
 }

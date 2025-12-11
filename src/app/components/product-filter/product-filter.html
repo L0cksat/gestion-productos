@@ -1,1 +1,60 @@
-<p>product-filter works!</p>
+<div class="card mb-4">
+<div class=" card-header bg-danger text-white">
+<h5 class="mb-0">Filtrar Productos</h5>
+</div>
+<div class="card-body">
+<form class="row g-3">
+
+    <div class="col-md-3">
+        <label for="filterName" class="form-label">Nombre</label>
+        <input type="text" class="form-control" 
+        id="filterName" name="name" 
+        [(ngModel)]="filtros.name"
+        (keyup)="aplicarFiltros()"
+        placeholder="Buscar ->">
+    </div>
+
+    <div class="col-md-3">
+        <label for="filterCategory" class="form-label">Categoría</label>
+        <input type="text"
+        class="form-control"
+        id="filterCategory"
+        name="category"
+        [(ngModel)]="filtros.category"
+        (keyup)="aplicarFiltros()"
+        placeholder="Ej: hombre, etc.">
+    </div>
+
+    <div class="col-md-2">
+        <label for="filterPrice" class="form-label">Precio</label>
+        <input type="number"
+        class="form-control"
+        id="filterPrice"
+        name="price"
+        [(ngModel)]="filtros.price"
+        (change)="aplicarFiltros()">
+    </div>
+
+    <div class="col-md-2">
+        <label for="filterActive" class="form-label">Estado</label>
+        <select class="form-select"
+        id="filterActive"
+        name="active"
+        [(ngModel)]="filtros.active"
+        (change)="aplicarFiltros()">
+        <option value="">Todos</option>
+        <option value="true">Activos</option>
+        <option value="false">Inactivos</option>
+    </select>
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+        <button type="button"
+        class="btn btn-outline-danger w-100"
+        (click)="limpiar()">
+        Limpiar Filtros
+    </button>
+    </div>
+</form>
+</div>
+</div>
