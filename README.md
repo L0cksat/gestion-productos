@@ -2,8 +2,7 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.6.
 
-### Filetree
-# File Tree: gestion-productos
+## File Tree: gestion-productos
 
 **Generated:** 12/11/2025, 12:19:48 PM
 
