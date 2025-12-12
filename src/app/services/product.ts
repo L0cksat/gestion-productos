@@ -62,7 +62,7 @@ export class ProductService {
   }
 
   // Este es el método para realizar la aplicación de los filtros a los productos.
-  filtrarProdcutos(filtros: any){
+  filtrarProductos(filtros: any){
 
     // Creamos la variable para que pueda ser cambiado (let en vez de const)
     let productosFiltrados = this.productosOriginales

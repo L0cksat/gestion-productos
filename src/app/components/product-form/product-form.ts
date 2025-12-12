@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-form',
@@ -12,16 +12,17 @@ export class ProductFormComponent {
 
 
   formulario = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-    price: new FormControl(0),
-    category: new FormControl(''),
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    description: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    price: new FormControl(0, [Validators.required, Validators.min(0.01)]),
+    category: new FormControl('', [Validators.required, Validators.minLength(3)]),
     image: new FormControl(''),
     active: new FormControl(true)
   });
   
   enviar(){
-    this.productoCreado.emit(this.formulario.value);
+    if (this.formulario.valid){
+      this.productoCreado.emit(this.formulario.value);
     this.formulario.reset(
       {
       name: '',
@@ -32,6 +33,10 @@ export class ProductFormComponent {
       active: true
       }
     )
+    }else{
+      this.formulario.markAllAsTouched()
+    }
+    
   }
  
 }

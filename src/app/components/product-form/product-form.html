@@ -1,45 +1,91 @@
 <div class="card p-4 shadow-sm mb-5">
-<div class="card-header bg-danger text-white fw-semibold">
-    <h4 class="mb-0">Añadir Producto</h4>
-</div>
-
-
-<form [formGroup]="formulario" (ngSubmit)="enviar()">
-
-    <div class="mb-3">
-        <label class="form-label">Nombre</label>
-        <input class="form-control" formControlName="name">
+    <div class="card-header bg-danger text-white fw-semibold">
+        <h4 class="mb-0">Añadir Producto</h4>
     </div>
 
-    <div class="mb-3">
-         <label class="form-label">Descripción</label>
-        <textarea class="form-control" rows="2" formControlName="description"></textarea>
-    </div>
 
-    <div class="mb-3">
-        <label class="form-label">Categoría</label>
-        <input class="form-control" formControlName="category">
-    </div>
+    <form [formGroup]="formulario" (ngSubmit)="enviar()">
 
-    <div class="mb-3">
-        <label class="form-label">Precio</label>
-        <input type="number" class="form-control" formControlName="price">
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input class="form-control" formControlName="name"
+                [class.is-invalid]="formulario.get('name')?.invalid && formulario.get('name')?.touched">
 
-    <div class="mb-3">
-        <label class="form-label">URL Imagen</label>
-        <input class="form-control" formControlName="image">
-    </div>
+            @if (formulario.get('name')?.hasError('required') && formulario.get('name')?.touched) {
+            <div class="text-danger small">
+                El nombre es obligatorio.
+            </div>
+            }
+            @if (formulario.get('name')?.hasError('minlength') && formulario.get('name')?.touched) {
+                <div class="text-danger small">
+                    El nombre debe tener al menos 3 letras.
+                </div>
+            }
 
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" formControlName="active" id="activoCheck">
-        <label for="activoCheck" class="form-label">Activo</label>
-    </div>
+        </div>
 
-    <button type="submit" class="btn btn-success w-100">
-        Crear Producto
-    </button>
+        <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" rows="2" formControlName="description"
+            [class.is-invalid]="formulario.get('description')?.invalid && formulario.get('description')?.touched"></textarea>
 
-</form>
+            @if(formulario.get('description')?.hasError('required') && formulario.get('description')?.touched){
+                <div class="text-danger small">
+                    La descripción es obligatorio.
+                </div>
+            }
+
+            @if (formulario.get('description')?.hasError('minlength') && formulario.get('description')?.touched) {
+                <div class="text-danger small">
+                    La descripción debe tener al menos 10 caracteres.
+                </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            <input class="form-control" formControlName="category"
+            [class.is-invalid]="formulario.get('category')?.invalid && formulario.get('category')?.touched">
+            
+            @if (formulario.get('category')?.hasError('required') && formulario.get('category')?.touched) {
+                <div class="text-danger small">
+                    La categoría es obligatoria.
+                </div>
+            }
+
+            @if (formulario.get('category')?.hasError('minlength') && formulario.get('category')?.touched) {
+                <div class="text-danger small">
+                    La categoría debe tener al menos 3 caracteres.
+                </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Precio</label>
+            <input type="number" class="form-control" formControlName="price"
+            [class.is-invalid]="formulario.get('price')?.invalid && formulario.get('price')?.touched">
+
+            @if (formulario.get('price')?.hasError('min') && formulario.get('price')?.touched) {
+                <div class="text-danger small">
+                    El precio no puede ser cero o negativo.
+                </div>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">URL Imagen</label>
+            <input class="form-control" formControlName="image">
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" formControlName="active" id="activoCheck">
+            <label for="activoCheck" class="form-label">Activo</label>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+            Crear Producto
+        </button>
+
+    </form>
 
 </div>

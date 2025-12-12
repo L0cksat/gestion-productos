@@ -8,7 +8,7 @@ import { ProductsCard } from '../products-card/products-card';
   templateUrl: './products-list.html',
   styleUrl: './products-list.css',
 })
-export class ProductsList {
+export class ProductsListComponent {
 
   productos: Product[] = []
 

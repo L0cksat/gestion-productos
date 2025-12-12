@@ -1,16 +1,45 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product';
 
 @Component({
   selector: 'app-product-filter',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './product-filter.html',
   styleUrl: './product-filter.css',
 })
-export class ProductFilterComponent {
+export class ProductFilterComponent implements OnInit{
 
-  filtros = {
+  filterForm = new FormGroup({
+    name: new FormControl(''),
+    category: new FormControl(''),
+    price: new FormControl(null),
+    active: new FormControl('')
+  });
+
+  constructor(private productService: ProductService){}
+
+  ngOnInit(){
+    this.filterForm.valueChanges.subscribe(valores =>{
+      this.productService.filtrarProductos(valores)
+    });
+  }
+
+  limpiar(){
+    this.filterForm.reset({
+      name: '',
+      category: '',
+      price: null,
+      active: ''
+    });
+
+  }
+}
+
+  //Este codigo es para el FormsTemplate: Hay que poner en el import: import { FormsModule } y luego en el imports en el 
+  //@Component hay que poner [FormsModule]
+
+  /*filtros = {
     name: '',
     category: '',
     price: 0,
@@ -32,7 +61,6 @@ export class ProductFilterComponent {
     }
 
     this.productService.limpiarFiltros();
-  }
-
+  }*/
   
-}
+

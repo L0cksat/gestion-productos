@@ -3,14 +3,12 @@
 <h5 class="mb-0">Filtrar Productos</h5>
 </div>
 <div class="card-body">
-<form class="row g-3">
+<form [formGroup]="filterForm" class="row g-3">
 
     <div class="col-md-3">
         <label for="filterName" class="form-label">Nombre</label>
-        <input type="text" class="form-control" 
-        id="filterName" name="name" 
-        [(ngModel)]="filtros.name"
-        (keyup)="aplicarFiltros()"
+        <input type="text" class="form-control"  
+        formControlName="name"
         placeholder="Buscar ->">
     </div>
 
@@ -18,10 +16,7 @@
         <label for="filterCategory" class="form-label">Categoría</label>
         <input type="text"
         class="form-control"
-        id="filterCategory"
-        name="category"
-        [(ngModel)]="filtros.category"
-        (keyup)="aplicarFiltros()"
+        formControlName="category"
         placeholder="Ej: hombre, etc.">
     </div>
 
@@ -29,19 +24,13 @@
         <label for="filterPrice" class="form-label">Precio</label>
         <input type="number"
         class="form-control"
-        id="filterPrice"
-        name="price"
-        [(ngModel)]="filtros.price"
-        (change)="aplicarFiltros()">
+        formControlName="price">
     </div>
 
     <div class="col-md-2">
         <label for="filterActive" class="form-label">Estado</label>
         <select class="form-select"
-        id="filterActive"
-        name="active"
-        [(ngModel)]="filtros.active"
-        (change)="aplicarFiltros()">
+        formControlName="active">
         <option value="">Todos</option>
         <option value="true">Activos</option>
         <option value="false">Inactivos</option>
