@@ -1,49 +1,30 @@
-<div class="card mb-4">
+<div class="card mb-4 shadow-sm">
 <div class=" card-header bg-danger text-white">
 <h5 class="mb-0">Filtrar Productos</h5>
 </div>
-<div class="card-body">
-<form [formGroup]="filterForm" class="row g-3">
+<div class="card-body row g-3">
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <label for="filterName" class="form-label">Nombre</label>
         <input type="text" class="form-control"  
-        formControlName="name"
-        placeholder="Buscar ->">
+        placeholder="Buscar por nombre"
+        (input)="onNombreChange($event)">
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <label for="filterCategory" class="form-label">Categoría</label>
         <input type="text"
         class="form-control"
-        formControlName="category"
-        placeholder="Ej: hombre, etc.">
+        placeholder="Filtrar por categoria"
+        (input)="onCategoriaChange($event)">
     </div>
 
-    <div class="col-md-2">
-        <label for="filterPrice" class="form-label">Precio</label>
-        <input type="number"
-        class="form-control"
-        formControlName="price">
+    <div class="col-md-4 d-flex align-items-center">
+        <label for="filterActive" class="form-check-label px-3" id="soloActivos">Solo Activos</label>
+        <input type="checkbox"
+        class="form-check-input"
+        id="soloActivos"
+        (change)="onActivoChange($event)">
     </div>
-
-    <div class="col-md-2">
-        <label for="filterActive" class="form-label">Estado</label>
-        <select class="form-select"
-        formControlName="active">
-        <option value="">Todos</option>
-        <option value="true">Activos</option>
-        <option value="false">Inactivos</option>
-    </select>
-    </div>
-
-    <div class="col-md-2 d-flex align-items-end">
-        <button type="button"
-        class="btn btn-outline-danger w-100"
-        (click)="limpiar()">
-        Limpiar Filtros
-    </button>
-    </div>
-</form>
 </div>
 </div>

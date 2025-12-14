@@ -1,66 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product';
 
 @Component({
   selector: 'app-product-filter',
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './product-filter.html',
   styleUrl: './product-filter.css',
 })
-export class ProductFilterComponent implements OnInit{
+export class ProductFilterComponent {
 
-  filterForm = new FormGroup({
-    name: new FormControl(''),
-    category: new FormControl(''),
-    price: new FormControl(null),
-    active: new FormControl('')
-  });
+  constructor(private productService: ProductService) {}
 
-  constructor(private productService: ProductService){}
-
-  ngOnInit(){
-    this.filterForm.valueChanges.subscribe(valores =>{
-      this.productService.filtrarProductos(valores)
-    });
+  onNombreChange(event: Event){
+    const valor = (event.target as HTMLInputElement).value
+    this.productService.filtrarPorNombre(valor)
   }
 
-  limpiar(){
-    this.filterForm.reset({
-      name: '',
-      category: '',
-      price: null,
-      active: ''
-    });
-
+  onCategoriaChange(event: Event){
+    const valor = (event.target as HTMLInputElement).value
+    this.productService.filtrarPorCategoria(valor)
   }
+
+  onActivoChange(event: Event){
+    const marcado =(event.target as HTMLInputElement).checked
+    this.productService.filtrarPorActivos(marcado)
+  }
+
 }
 
-  //Este codigo es para el FormsTemplate: Hay que poner en el import: import { FormsModule } y luego en el imports en el 
-  //@Component hay que poner [FormsModule]
-
-  /*filtros = {
-    name: '',
-    category: '',
-    price: 0,
-    active: ''
-  }
-
-  constructor(private productService: ProductService){}
-
-  aplicarFiltros(){
-    this.productService.filtrarProdcutos(this.filtros)
-  }
-
-  limpiar(){
-    this.filtros = {
-      name: '',
-      category: '',
-      price: 0,
-      active: ''
-    }
-
-    this.productService.limpiarFiltros();
-  }*/
   
 

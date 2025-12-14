@@ -61,53 +61,31 @@ export class ProductService {
     this.productosSubject.next(this.productosOriginales)
   }
 
-  // Este es el método para realizar la aplicación de los filtros a los productos.
-  filtrarProductos(filtros: any){
+  // Este es el método para realizar la aplicación del filtro de productos por nombre.
+  filtrarPorNombre(nombre: string){
 
-    // Creamos la variable para que pueda ser cambiado (let en vez de const)
-    let productosFiltrados = this.productosOriginales
+    const filtrados = this.productosOriginales.filter(p => p.name.toLowerCase().includes(nombre.toLowerCase()))
 
-    //Aquí ya implementamos los filtros que aparecerán en la página, 
-    // los cuales usaremos para realizar el filtro de los productos
-    // Emepezamos con el filtro para el nombre
-    //Pedimos dentro del if que busque y comprueba que el producto que intentamos filtar tenga nombre, categoria, etc
-    //si lo tiene entonces lo convierte a minusculas y lo busca, si no lo tiene se descarta y pasa al siguente sin intentar convertirlo (en el caso de un string).
-    if (filtros.name){
-      productosFiltrados = productosFiltrados.filter(p =>
-        p.name && p.name.toLowerCase().includes(filtros.name.toLowerCase())
-      );
-    }
+    this.productosSubject.next(filtrados)
+    
+  }
 
-    if (filtros.category){
-      productosFiltrados = productosFiltrados.filter(p =>
-        p.category && p.category.toLowerCase().includes(filtros.category.toLowerCase())
-      );
-    }
+  // Este es el método para realizar la aplicación del filtro de productos por categoría.
+  filtrarPorCategoria(categoria: string){
 
-    if (filtros.price){
-      productosFiltrados = productosFiltrados.filter(p =>
-        p.price <= filtros.price
-      );
-    }
+    const filtrados = this.productosOriginales.filter(p => p.category.toLowerCase().includes(categoria.toLowerCase()))
 
-    //Aquí con el filtro del Estado le pedimos en el if que comprube cual de los estados viene,
-    //si es vacio "" entonces no filtra nada ya que no devuleve true o false. En el caso de isActiveFilter, va a comprobar lo que le llega
-    //desde el HTML, si es un true lo convierte en String (por si acaso) y devuelve true, mostrando los Activos.
-    //En el caso de los Inactivos, hace lo mismo pero con false, comprueba, devuelve false en String y muestra los Inactivos.
+    this.productosSubject.next(filtrados)
+  }
 
-    // Con el productosFiltrados conseguimos que protegernos de datos "sucios" del JSON que llamamos a través del API
-    // con la variable productActiveStatus preguntamos que si es true o false en el atributo active, y lo comparamos con isActiveFilter para mostrar
-    // ACtivo o Inactivo. Si no tiene campo o es no definido automáticamente devuelve false.
-    if ( filtros.active !== '' && filtros.active !== null && filtros.active !== undefined){
-      const isActiveFilter = String(filtros.active) === 'true'
+  // Este es le método para realizar la aplicación del filtro de productos por activos.
+  filtrarPorActivos(SoloActivos: boolean){
 
-      productosFiltrados = productosFiltrados.filter(p => {
-        const productActiveStatus = p.active === true
-        return productActiveStatus === isActiveFilter
-      });
-    }
+    const filtrados = SoloActivos
+    ? this.productosOriginales.filter(p => p.active)
+    : this.productosOriginales
 
-    this.productosSubject.next(productosFiltrados)
+    this.productosSubject.next(filtrados)
   }
 
   // Metodo para limpar los filtros aplicados, recuperando la lista de productos originales
